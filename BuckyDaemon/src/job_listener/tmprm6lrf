@@ -1,4 +1,0 @@
-struct JobListener{
-	server: String,
-	port
-}

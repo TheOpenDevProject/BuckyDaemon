@@ -1,3 +1,0 @@
-struct JobListener{
-	pub server_n
-}
