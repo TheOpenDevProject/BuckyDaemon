@@ -1,0 +1,28 @@
+extern crate
+use tiny_http::{Server, Response};
+pub struct JobListener{
+	pub server_name: String,
+	pub server_port: i32
+}
+
+impl JobListener{
+	pub fn new(server: String,port: i32) -> JobListener{
+		JobListener{server_name: server,server_port:port}
+	}
+
+	pub fn start(){
+
+	let server = Server::http(self.server_name + ":" + self.server_port.to_string()).unwrap();
+
+	for request in server.incoming_requests() {
+    println!("received request! method: {:?}, url: {:?}, headers: {:?}",
+        request.method(),
+        request.url(),
+        request.headers()
+    );
+
+    let response = Response::from_string("hello world");
+    request.respond(response);
+	}
+}
+}

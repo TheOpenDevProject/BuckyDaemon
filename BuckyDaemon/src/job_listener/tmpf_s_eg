@@ -3,21 +3,23 @@ use std::env;
 use self::tiny_http::{Server, Response};
 
 pub struct JobListener{
-	alertAddress:String
+	pub server_name: String
 }
 
 impl JobListener{
-	pub fn new(alertAddress_param:String) -> JobListener{
-		JobListener{alertAddress: alertAddress_param}
+	pub fn new(server: String) -> JobListener{
+		JobListener{server_name: server}
 	}
 
-	pub fn start(&self,server: &str ){
-	let server = Server::http(server).unwrap();
+	pub fn start(&self){
+
+	let server = Server::http(&self.[...]).unwrap();
 
 	for request in server.incoming_requests() {
-    println!("received request! method: {:?}, url: {:?}",
+    println!("received request! method: {:?}, url: {:?}, headers: {:?}",
         request.method(),
-        request.url()
+        request.url(),
+        request.headers()
     );
 
     let response = Response::from_string("hello world");

@@ -8,16 +8,17 @@ pub struct JobListener{
 
 impl JobListener{
 	pub fn new(alertAddress_param:String) -> JobListener{
-		JobListener{alertAddress: alertAddress_param}
+		JobListener{alertAddress: a}
 	}
 
 	pub fn start(&self,server: &str ){
 	let server = Server::http(server).unwrap();
 
 	for request in server.incoming_requests() {
-    println!("received request! method: {:?}, url: {:?}",
+    println!("received request! method: {:?}, url: {:?}, headers: {:?}",
         request.method(),
-        request.url()
+        request.url(),
+        request.headers()
     );
 
     let response = Response::from_string("hello world");
