@@ -1,0 +1,49 @@
+extern crate lettre;
+use lettre::email::EmailBuilder;
+use lettre::transport::smtp::{SecurityLevel, SmtpTransport,
+SmtpTransportBuilder};
+use lettre::transport::smtp::authentication::Mechanism;
+use lettre::transport::smtp::SUBMISSION_PORT;
+use lettre::transport::EmailTransport;
+
+fn main(){
+let mut builder = EmailBuilder::new();
+builder = builder.to(("user@example.org", "Alias name"));
+builder = builder.cc(("user@example.net", "Alias name"));
+builder = builder.from("no-reply@example.com");
+builder = builder.from("no-reply@example.eu");
+builder = builder.sender("no-reply@example.com");
+builder = builder.subject("Hello world");
+builder = builder.body("Hi, Hello world.");
+builder = builder.reply_to("contact@example.com");
+builder = builder.add_header(("X-Custom-Header", "my header"));
+
+let email = builder.build().unwrap();
+
+// Connect to a remote server on a custom port
+let mut mailer = SmtpTransportBuilder::new(("server.tld",
+SUBMISSION_PORT)).unwrap()
+    // Set the name sent during EHLO/HELO, default is `localhost`
+    .hello_name("my.hostname.tld")
+    // Add credentials for authentication
+    .credentials("username", "password")
+    // Specify a TLS security level. You can also specify an SslContext with
+    // .ssl_context(SslContext::Ssl23)
+    .security_level(SecurityLevel::AlwaysEncrypt)
+    // Enable SMTPUTF8 is the server supports it
+    .smtp_utf8(true)
+    // Configure accepted authetication mechanisms
+    .authentication_mechanisms(vec![Mechanism::CramMd5])
+    // Enable connection reuse
+    .connection_reuse(true).build();
+
+let result_1 = mailer.send(email.clone());
+assert!(result_1.is_ok());
+
+// The second email will use the same connection
+let result_2 = mailer.send(email);
+assert!(result_2.is_ok());
+
+// Explicitely close the SMTP transaction as we enabled connection reuse
+mailer.close();
+}

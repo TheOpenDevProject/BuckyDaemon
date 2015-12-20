@@ -1,0 +1,8 @@
+struct JobListener{
+	server: String,
+	port: i32
+}
+
+impl JobListener{
+	fn new
+}

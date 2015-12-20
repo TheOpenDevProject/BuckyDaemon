@@ -1,0 +1,4 @@
+struct JobListener{
+	pub server_name: String,
+	pub server_porr
+}

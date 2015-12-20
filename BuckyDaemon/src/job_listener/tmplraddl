@@ -1,0 +1,8 @@
+struct JobListener{
+	pub server_name: String,
+	pub server_port: i32
+}
+
+impl JobListener{
+	fn new(server: String,port:)
+}
