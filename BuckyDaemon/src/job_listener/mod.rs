@@ -23,9 +23,26 @@ impl JobListener{
 			}
 		}
 	}
+	
+	fn get_route<'a>(&self, url: &'a str) -> Vec<&'a str>{
+		let mut request_paths = url.split("/");
+		let paths = request_paths.collect::<Vec<&str>>();
+		paths
+	}
 
 	fn handle_post(&self, url: &str){
-		println!("POST request made {:?}",url);
+		/*RESTfull API:{
+		Once we get the POST request we need to further split up our actions.
+		Currently Supported POST actions are:
+		/queue_job/
+		/queue_dpj/
+		}*/
+	
+		//Do The match
+		let mut paths = self.get_route(url);
+		for level in &paths{
+			println!("{}",level);
+		}
 	}
 
 	fn handle_get(&self,url: &str){
