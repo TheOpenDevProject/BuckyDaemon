@@ -24,7 +24,7 @@ impl JobListener{
 		}
 	}
 	
-	fn get_route<'a>(&self, url: &'a str) -> Vec<&'a str>{
+	fn get_route(url: &str) -> Vec<&str>{
 		let mut request_paths = url.split("/");
 		let paths = request_paths.collect::<Vec<&str>>();
 		paths
@@ -39,7 +39,7 @@ impl JobListener{
 		}*/
 	
 		//Do The match
-		let mut paths = self.get_route(url);
+		let mut paths = JobListener::get_route(url);
 		for level in &paths{
 			println!("{}",level);
 		}
