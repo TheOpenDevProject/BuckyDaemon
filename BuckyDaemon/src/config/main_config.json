@@ -1,0 +1,15 @@
+{
+	serverConfig: {
+		"serverName" : "example Server",
+		"serverAddress" : "0.0.0.0:8080",
+		"maxConcurrentConnections" : 10,
+		"maxConcurrentJobsRunning" : 0
+	},
+	databaseConfig: {
+		"databaseType" : "mysql",
+		"databaseAddress" : "127.0.0.7",
+		"databasePort": "3306",
+		"databaseUser": "root",
+		"databasePassword" : "password"
+	}
+}
