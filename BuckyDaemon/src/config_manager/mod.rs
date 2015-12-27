@@ -1,31 +1,28 @@
-extern crate rustc_serialize;
-use self::rustc_serialize::json::Json;
+#![feature(custom_derive, plugin)]
+#![plugin(serde_macros)]
+extern crate serde;
+extern crate serde_json;
 use std::fs::File;
 use std::io::Read;
 use std::error::Error;
 use std::env;
-pub struct ConfigManager{
-	file_name : String
+
+pub struct Config{
+		serverName: String,
+		serverAddress: String,
+		maxConcurrentConnections: u8,
+		maxConcurrentJobsRunning: u8
 }
 
+//A Simple Implementation To Get The Config Object
  impl ConfigManager{
-	pub fn new(config_to_load: String) -> ConfigManager{
-		ConfigManager {file_name: config_to_load}
-	}
-
-	pub fn load(&self){
-		//Get CWD
-		let p = env::current_dir().unwrap();
-		println!("{:?}",p.display());
-		//Open The Config File
-		let mut file = match File::open(&self.file_name){
+	pub fn load(config_to_load: String) -> ConfigManager{
+		//FileLoad
+		let mut file = match File::open(&config_to_load){
 			Err(err_desc) => panic!("Failed To Load BuckyDaemon Main Config (Reason: {})",Error::description(&err_desc)),
 			Ok(file) => file,
 		};
-
-		let mut data = String::new();
-		file.read_to_string(&mut data).unwrap();
-		let json = Json::from_str(&data).unwrap();
-		println!("{}",json.find_path(&["serverConfig"]).unwrap());
+		
+		Config {file_name: config_to_load}
 	}
 }
