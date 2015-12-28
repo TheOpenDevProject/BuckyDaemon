@@ -5,7 +5,7 @@ dependencies = [
  "lettre 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "mongodb 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustorm 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde 0.6.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde_json 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "tiny_http 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
