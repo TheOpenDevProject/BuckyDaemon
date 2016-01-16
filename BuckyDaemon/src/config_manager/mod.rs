@@ -46,7 +46,9 @@ impl ConfigManager {
     }
 
     fn build_config(data: Value) {
-        let server_config = data.as_object().unwrap().get("serverConfig");
-
+        let server_config = data.as_object().unwrap();
+        let serverConfObj = server_config.get("serverConfig").unwrap();
+        let databaseConfObj = server_config.get("databaseConfig").unwrap();
+        
     }
 }
