@@ -70,14 +70,12 @@ impl ConfigManager {
                                            .as_string()
                                            .unwrap())
         };
+        println!("{:?}", server_config.serverName);
+
 
     }
 
-    fn get_u8_value_from_str(string_value: &str) -> u8 {
-        let result = match string_value.parse::<u8>() {
-            Err(msg) => panic!("{:?}", msg),
-            Ok(val) => val,
-        };
-        result
+    fn get_u8_value_from_str(string_value: &str) {
+        m
     }
 }

@@ -61,23 +61,25 @@ impl ConfigManager {
                                                        .unwrap()
                                                        .as_string()
                                                        .unwrap()),
-            maxConcurrentConnections: ConfigManager::get_u8_value_from_str(server_conf_obj.get("maxConcurrentConnections")
+            maxConcurrentConnections: || {
+                let value = server_conf_obj.get("maxConcurrentConnections")
                                            .unwrap()
                                            .as_string()
-                                           .unwrap()),
-            maxConcurrentJobsRunning: ConfigManager::get_u8_value_from_str(server_conf_obj.get("maxConcurrentConnections")
-                                           .unwrap()
-                                           .as_string()
-                                           .unwrap())
-        };
+                                           .unwrap().parse::<u8>();
+                   match value {
+                        Err(Why) => panic!("{:?}", Why),
+                        Ok(rf)
+                   }
 
-    }
-
-    fn get_u8_value_from_str(string_value: &str) -> u8 {
-        let result = match string_value.parse::<u8>() {
-            Err(msg) => panic!("{:?}", msg),
-            Ok(val) => val,
+            },
+            maxConcurrentJobsRunning: u8::from_str_radix(server_conf_obj.get("serverName")
+                                                                        .unwrap()
+                                                                        .as_string()
+                                                                        .unwrap(),
+                                                         8),
         };
-        result
+        println!("{:?}", server_config.serverName);
+
+
     }
 }

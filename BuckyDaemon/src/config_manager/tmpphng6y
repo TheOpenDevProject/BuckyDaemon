@@ -51,6 +51,7 @@ impl ConfigManager {
         // Break out our JSON file
         let server_conf_obj = server_config.get("serverConfig").unwrap().as_object().unwrap();
         let database_conf_obj = server_config.get("databaseConfig").unwrap().as_object().unwrap();
+
         // Convert to the respective struct
         let server_config = ServerConfig {
             serverName: String::from(server_conf_obj.get("serverName")
@@ -61,23 +62,17 @@ impl ConfigManager {
                                                        .unwrap()
                                                        .as_string()
                                                        .unwrap()),
-            maxConcurrentConnections: ConfigManager::get_u8_value_from_str(server_conf_obj.get("maxConcurrentConnections")
-                                           .unwrap()
-                                           .as_string()
-                                           .unwrap()),
-            maxConcurrentJobsRunning: ConfigManager::get_u8_value_from_str(server_conf_obj.get("maxConcurrentConnections")
-                                           .unwrap()
-                                           .as_string()
-                                           .unwrap())
+            maxConcurrentConnections: u8::from_str_rad(server_conf_obj.get("serverName")
+                                                                  .unwrap()
+                                                                  .as_string()
+                                                                  .unwrap()),
+            maxConcurrentJobsRunning: String::from(server_conf_obj.get("serverName")
+                                                                  .unwrap()
+                                                                  .as_string()
+                                                                  .unwrap()),
         };
+        println!("{:?}", server_config.serverName);
 
-    }
 
-    fn get_u8_value_from_str(string_value: &str) -> u8 {
-        let result = match string_value.parse::<u8>() {
-            Err(msg) => panic!("{:?}", msg),
-            Ok(val) => val,
-        };
-        result
     }
 }
